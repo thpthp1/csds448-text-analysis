@@ -95,6 +95,10 @@ if __name__ == "__main__":
         print(f'top features: {np.asarray(model.vectorizer.get_feature_names())[features]}')
         print('-'*40)
         fold += 1
-for key in metrics.keys():
-    if key != 'conf_mat':
-        print(f'{key}: {np.mean(metrics[key])} +- {np.std(metrics[key])}')
+
+    with open('./model/text-match-reviews.pkl', 'wb') as model_file:
+        pickle.dump(model, model_file)
+
+    for key in metrics.keys():
+        if key != 'conf_mat':
+            print(f'{key}: {np.mean(metrics[key])} +- {np.std(metrics[key])}')

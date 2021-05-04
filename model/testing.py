@@ -8,6 +8,7 @@ import numpy as np
 import pickle
 from texthero import preprocessing
 import texthero
+from text_matching_clf import TextMatchingClassifier
 
 reviews = pd.read_csv("./clean/clean-raid.csv")
 
@@ -22,10 +23,15 @@ with open('./model/vectorizer-reviews.pkl', 'rb') as vf:
 with open('./model/svc-reviews.pkl', 'rb') as svc_f:
     model = pickle.load(svc_f)
 
+with open('./model/text-match-reviews.pkl', 'rb') as text_f:
+    text_match_model = pickle.load(text_f)
+
+
 X = vectorizer.transform(sampled_reviews["clean"])
 output = pd.DataFrame({'content': sampled_reviews["content"],
                         "score" : sampled_reviews["score"],
-                        "is_aggresive_IAP" : model.predict(X)})
+                        "is_aggresive_IAP" : model.predict(X),
+                        "is_agressive_IAP_text_match": text_match_model.predict(sampled_reviews["clean"])})
 
 
 output.to_csv("./model/sample_pred.csv")
