@@ -1,11 +1,12 @@
 from model.utils import vectorize
 from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import auc, precision_score, accuracy_score, recall_score, f1_score, confusion_matrix
+from sklearn.metrics import plot_roc_curve, precision_score, accuracy_score, recall_score, f1_score, confusion_matrix
 import pandas as pd
 from utils import vectorize
 import numpy as np
 import pickle
+import matplotlib.pyplot as plt
 
 REVIEW_COL = 'review'
 positive = pd.read_csv("./reviews/TaggedData - Sheet1.csv", index_col=None)
@@ -62,6 +63,10 @@ for train, test in kfold.split(X, Y):
     print(metrics['conf_mat'][fold])
     print('-'*40)
     fold += 1
+    if fold == 5:
+        plot_roc_curve(model, x_test, y_test)
+        plt.show()
+
 with open('./model/vectorizer-reviews.pkl', 'wb') as vectorizer_file:
     pickle.dump(vectorizer, vectorizer_file)
     

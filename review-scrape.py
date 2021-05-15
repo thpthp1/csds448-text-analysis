@@ -7,12 +7,12 @@ def default(o):
         return o.isoformat()
 
 results = reviews_all(
-    'com.plarium.raidlegends',
+    'com.innersloth.spacemafia',
     lang='en', # defaults to 'en'
     country='us', # defaults to 'us'
 )
 #print(results)
-with open('scrape-raid.json', 'w') as f:
+with open('scrape-amongus.json', 'w') as f:
     json.dump(results, f, default=default)
 
 

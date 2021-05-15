@@ -57,6 +57,9 @@ if __name__ == "__main__":
             'tag': [True] * len(positive) + [False] * (len(dragalia_neg) + len(dungeon_neg) + len(color_neg))}
     )
 
+    print(np.sum(data['tag'] == True))
+    print(np.sum(data['tag'] == False))
+
     data["clean"] = texthero.clean(data[REVIEW_COL], TEXTHERO_FILTER)
 
     X, vectorizer = vectorize(data, REVIEW_COL, dict(stop_words='english', min_df=2))
