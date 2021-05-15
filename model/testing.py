@@ -10,12 +10,13 @@ from texthero import preprocessing
 import texthero
 from text_matching_clf import TextMatchingClassifier
 
-reviews = pd.read_csv("./clean/clean-raid.csv")
+reviews = pd.read_csv("./clean/clean-geomdash.csv")
 
 reviews["clean"] = texthero.clean(reviews["content"], pipeline=TEXTHERO_FILTER)
 
-SAMPLE_PER_CLASS = 250
-sampled_reviews = reviews.groupby('score').apply(lambda x: x.sample(SAMPLE_PER_CLASS))
+# SAMPLE_PER_CLASS = 250
+# sampled_reviews = reviews.groupby('score').apply(lambda x: x.sample(SAMPLE_PER_CLASS))
+sampled_reviews = reviews
 
 with open('./model/vectorizer-reviews.pkl', 'rb') as vf:
     vectorizer = pickle.load(vf)
@@ -34,4 +35,4 @@ output = pd.DataFrame({'content': sampled_reviews["content"],
                         "is_agressive_IAP_text_match": text_match_model.predict(sampled_reviews["clean"])})
 
 
-output.to_csv("./model/sample_pred.csv")
+output.to_csv("./model/sample_pred_geomdash.csv")
